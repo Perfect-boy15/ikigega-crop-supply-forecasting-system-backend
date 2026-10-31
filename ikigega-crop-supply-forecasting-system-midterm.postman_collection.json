@@ -1,0 +1,3658 @@
+{
+  "info": {
+    "name": "Ikigega Crop Supply Forecasting System Midterm",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Run on a fresh demo database. Historical seed dates require an application environment dated no later than 2026-10-20. Read README before running. Tests are provided, not claimed as executed."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "missingId",
+      "value": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Step 0 - seed via endpoints (fresh database; read README date note)",
+      "item": [
+        {
+          "name": "A2 seed crop Maize",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/crop-types/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Maize\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Crop type saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture crop1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.name === 'Maize'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('crop1', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed crop Beans",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/crop-types/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Beans\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Crop type saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture crop2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.name === 'Beans'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('crop2', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed crop Irish Potatoes",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/crop-types/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Irish Potatoes\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Crop type saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture crop3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.name === 'Irish Potatoes'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('crop3', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed crop Cassava",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/crop-types/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cassava\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Crop type saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture crop4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.name === 'Cassava'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('crop4', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed warehouse 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/warehouses/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseNumber\": 1,\n  \"name\": \"Warehouse 1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Warehouse saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture warehouse1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.warehouseNumber === 1); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('warehouse1', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed warehouse 2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/warehouses/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseNumber\": 2,\n  \"name\": \"Warehouse 2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Warehouse saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture warehouse2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.warehouseNumber === 2); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('warehouse2', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed warehouse 3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/warehouses/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseNumber\": 3,\n  \"name\": \"Warehouse 3\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Warehouse saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture warehouse3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.warehouseNumber === 3); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('warehouse3', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed warehouse 4",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/warehouses/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseNumber\": 4,\n  \"name\": \"Warehouse 4\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Warehouse saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture warehouse4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.warehouseNumber === 4); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('warehouse4', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed agronomist 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/agronomists/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Agronomist1\",\n  \"lastName\": \"Demo\",\n  \"phone\": \"0780000001\",\n  \"warehouse\": {\n    \"id\": \"{{warehouse1}}\"\n  },\n  \"cropTypes\": [\n    {\n      \"id\": \"{{crop1}}\"\n    },\n    {\n      \"id\": \"{{crop2}}\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Agronomist saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture agronomist1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.firstName === 'Agronomist1'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('agronomist1', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed agronomist 2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/agronomists/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Agronomist2\",\n  \"lastName\": \"Demo\",\n  \"phone\": \"0780000002\",\n  \"warehouse\": {\n    \"id\": \"{{warehouse2}}\"\n  },\n  \"cropTypes\": [\n    {\n      \"id\": \"{{crop2}}\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Agronomist saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture agronomist2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.firstName === 'Agronomist2'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('agronomist2', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed agronomist 3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/agronomists/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Agronomist3\",\n  \"lastName\": \"Demo\",\n  \"phone\": \"0780000003\",\n  \"warehouse\": {\n    \"id\": \"{{warehouse3}}\"\n  },\n  \"cropTypes\": [\n    {\n      \"id\": \"{{crop3}}\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Agronomist saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture agronomist3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.firstName === 'Agronomist3'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('agronomist3', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed farmer 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/farmers/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Alice\",\n  \"lastName\": \"Niyonzima\",\n  \"farmerCode\": \"FRM-0345\",\n  \"phone\": \"0790000001\",\n  \"district\": \"Gasabo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Farmer saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture farmer1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.farmerCode === 'FRM-0345'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('farmer1', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed farmer 2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/farmers/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Eric\",\n  \"lastName\": \"Niyonzima\",\n  \"farmerCode\": \"FRM-0002\",\n  \"phone\": \"0790000002\",\n  \"district\": \"Gasabo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Farmer saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture farmer2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.farmerCode === 'FRM-0002'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('farmer2', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed farmer 3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/farmers/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jean\",\n  \"lastName\": \"Farmer3\",\n  \"farmerCode\": \"FRM-0003\",\n  \"phone\": \"0790000003\",\n  \"district\": \"Gasabo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Farmer saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture farmer3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.farmerCode === 'FRM-0003'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('farmer3', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed farmer 4",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/farmers/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Marie\",\n  \"lastName\": \"Farmer4\",\n  \"farmerCode\": \"FRM-0004\",\n  \"phone\": \"0790000004\",\n  \"district\": \"Gasabo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Farmer saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture farmer4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.farmerCode === 'FRM-0004'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('farmer4', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed farmer 5",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/farmers/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Paul\",\n  \"lastName\": \"Farmer5\",\n  \"farmerCode\": \"FRM-0005\",\n  \"phone\": \"0790000005\",\n  \"district\": \"Gasabo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Farmer saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture farmer5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.farmerCode === 'FRM-0005'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('farmer5', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed forecast 1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-10-20\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1001,\n  \"farmer\": {\n    \"id\": \"{{farmer1}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist1}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture forecast1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.expectedKg === 1001); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('forecast1', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 seed forecast 1 -> WITHDRAWN",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast1}}/status?status=WITHDRAWN"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast status updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed forecast 2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-10-20\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1002,\n  \"farmer\": {\n    \"id\": \"{{farmer1}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist1}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture forecast2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.expectedKg === 1002); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('forecast2', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 seed forecast 2 -> VERIFIED",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast2}}/status?status=VERIFIED"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast status updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 seed forecast 2 -> DELIVERED",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast2}}/status?status=DELIVERED"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast status updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed forecast 3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-10-21\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1003,\n  \"farmer\": {\n    \"id\": \"{{farmer1}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist2}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture forecast3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.expectedKg === 1003); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('forecast3', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 seed forecast 3 -> VERIFIED",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast3}}/status?status=VERIFIED"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast status updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 seed forecast 3 -> DELIVERED",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast3}}/status?status=DELIVERED"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast status updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed forecast 4",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-10-22\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1004,\n  \"farmer\": {\n    \"id\": \"{{farmer1}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist3}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture forecast4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.expectedKg === 1004); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('forecast4', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 seed forecast 4 -> VERIFIED",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast4}}/status?status=VERIFIED"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast status updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed forecast 5",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-10-23\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1005,\n  \"farmer\": {\n    \"id\": \"{{farmer2}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist1}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture forecast5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.expectedKg === 1005); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('forecast5', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed forecast 6",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-11-01\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1006,\n  \"farmer\": {\n    \"id\": \"{{farmer2}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist2}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture forecast6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.expectedKg === 1006); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('forecast6', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed forecast 7",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-11-02\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1007,\n  \"farmer\": {\n    \"id\": \"{{farmer3}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist3}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture forecast7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.expectedKg === 1007); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('forecast7', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 seed forecast 7 -> VERIFIED",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast7}}/status?status=VERIFIED"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast status updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed forecast 8",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-11-03\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1008,\n  \"farmer\": {\n    \"id\": \"{{farmer4}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist1}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture forecast8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.expectedKg === 1008); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('forecast8', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 seed forecast 8 -> WITHDRAWN",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast8}}/status?status=WITHDRAWN"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast status updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed forecast 9",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-11-04\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1009,\n  \"farmer\": {\n    \"id\": \"{{farmer5}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist2}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture forecast9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.expectedKg === 1009); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('forecast9', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 seed forecast 10",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-11-05\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1010,\n  \"farmer\": {\n    \"id\": \"{{farmer5}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist3}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture forecast10",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.expectedKg === 1010); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('forecast10', row.id);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Requirements - run after seed, before mutation checks",
+      "item": [
+        {
+          "name": "A1 - inspect JSON (verify SQL schema separately)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('No inverse agronomist list', () => pm.response.json().forEach(x => pm.expect(x).not.to.have.property('agronomists')));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 - forecasts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "B1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/by-last-name?lastName=niyonzima"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const rows = pm.response.json(); pm.test('Case insensitive and ordered', () => { pm.expect(rows.length).to.be.at.least(2); rows.forEach(x => pm.expect(x.lastName.toLowerCase()).to.eql('niyonzima')); pm.expect(rows.map(x=>x.firstName)).to.eql(rows.map(x=>x.firstName).sort()); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "B2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/by-status?status=SUBMITTED"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const rows = pm.response.json(); pm.test('Status and date order', () => { rows.forEach(x=>pm.expect(x.status).to.eql('SUBMITTED')); pm.expect(rows.map(x=>x.forecastDate)).to.eql(rows.map(x=>x.forecastDate).sort()); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "B3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/between?start=2026-10-01&end=2026-10-31"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "C1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/by-crop-type?name=maize"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "C2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/free"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Warehouse 4 is free', () => pm.expect(pm.response.json().map(x=>x.warehouseNumber)).to.include(4));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "C3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/unused"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Cassava is unused', () => pm.expect(pm.response.json().map(x=>x.name)).to.include('Cassava'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "C4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/of-agronomist/{{agronomist1}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const ids = pm.response.json().map(x=>x.id); pm.test('Distinct farmers', () => pm.expect(new Set(ids).size).to.eql(ids.length));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/weighing-tickets/save?harvestForecastId={{forecast2}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"produceName\": \"Maize grade A\",\n  \"remarks\": \"Dry and clean\",\n  \"weightKg\": 850\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Weighing ticket saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture ticket1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/weighing-tickets/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.harvestForecast.id === pm.collectionVariables.get('forecast2')); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('ticket1', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/weighing-tickets/farmer/FRM-0345"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "F1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/stats/by-status"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Bonus dashboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/dashboard/summary"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Summary keys', () => pm.expect(Object.keys(pm.response.json())).to.eql(['farmers','agronomists','freeWarehouses','forecastsToday','submitted','weighingTickets']));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Bonus pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/page?page=0&size=5&sort=forecastDate,desc"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Page metadata', () => { const p = pm.response.json(); pm.expect(p.totalElements).to.be.at.least(10); pm.expect(p.totalPages).to.be.at.least(2); pm.expect(p.content.length).to.eql(5); });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Business rules and failure cases (mutates seed)",
+      "item": [
+        {
+          "name": "A2 - unknown farmer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/{{missingId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The farmer with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "C4 - unknown agronomist",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/of-agronomist/{{missingId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The agronomist with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D1 - past date",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2000-01-01\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast date cannot be in the past\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D1 - starts SUBMITTED regardless of body",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"forecastDate\":\"{{futureDate}}\",\"status\":\"DELIVERED\",\"agronomist\":{\"id\":\"{{agronomist1}}\"},\"farmer\":{\"id\":\"{{farmer1}}\"},\"cropName\":\"Maize\",\"expectedKg\":98765}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const d = new Date(); d.setDate(d.getDate()+30); pm.collectionVariables.set('futureDate',d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Created',()=>pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D1 - duplicate visit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"{{futureDate}}\",\n  \"agronomist\": {\n    \"id\": \"{{agronomist1}}\"\n  },\n  \"farmer\": {\n    \"id\": \"{{farmer1}}\"\n  },\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1200\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', () => pm.response.to.have.status(409));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Agronomist already has a forecast visit on that date\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D1 - verify forced initial status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Forced SUBMITTED',()=>pm.expect(pm.response.json().find(x=>x.expectedKg===98765).status).to.eql('SUBMITTED'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 - final status blocked",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast2}}/status?status=SUBMITTED"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Cannot change status from DELIVERED to SUBMITTED\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 - verify submitted forecast",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast5}}/status?status=VERIFIED"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast status updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D3 - add crop type",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/{{agronomist2}}/crop-types/{{crop1}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Crop type added to the agronomist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D3 - duplicate crop type",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/{{agronomist2}}/crop-types/{{crop1}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', () => pm.response.to.have.status(409));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The agronomist already has that crop type\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D4 - taken warehouse",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/{{agronomist1}}/warehouse?warehouseNumber=2"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', () => pm.response.to.have.status(409));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"That warehouse is taken by another agronomist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D4 - move warehouse",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/{{agronomist1}}/warehouse?warehouseNumber=4"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Warehouse changed successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "D4 - old warehouse is free",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/free"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Old warehouse free',()=>pm.expect(pm.response.json().map(x=>x.warehouseNumber)).to.include(1));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E1 - unknown forecast",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/weighing-tickets/save?harvestForecastId={{missingId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"produceName\": \"Maize\",\n  \"weightKg\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The harvest forecast with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E1 - forecast not delivered",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/weighing-tickets/save?harvestForecastId={{forecast5}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"produceName\": \"Maize\",\n  \"weightKg\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Weighing tickets are only for DELIVERED harvest forecasts\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E3 - protect forecast",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/delete/{{forecast2}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 409', () => pm.response.to.have.status(409));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"That harvest forecast has weighing tickets, delete them first\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E3 - delete ticket",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/weighing-tickets/delete/{{ticket1}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Weighing ticket deleted successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "E3 - unknown ticket",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/weighing-tickets/delete/{{missingId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The weighing ticket with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "F2",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/cancel-day?agronomistId={{agronomist1}}&date=2026-10-20"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"1 harvest forecasts cancelled\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "F2 - delivered preserved",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast2}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Delivered preserved',()=>pm.expect(pm.response.json().status).to.eql('DELIVERED'));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "A2 - CRUD reference (run individually; seed relationships may prevent deletion)",
+      "item": [
+        {
+          "name": "A2 crop-types get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/{{crop1}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 crop-types update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/crop-types/update/{{crop1}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Maize\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Crop type updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 crop-types missing update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/crop-types/update/{{missingId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Maize\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The crop type with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 crop-types missing delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/delete/{{missingId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The crop type with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 warehouses get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/{{warehouse1}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 warehouses update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/warehouses/update/{{warehouse1}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseNumber\": 1,\n  \"name\": \"Warehouse 1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Warehouse updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 warehouses missing update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/warehouses/update/{{missingId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseNumber\": 1,\n  \"name\": \"Warehouse 1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The warehouse with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 warehouses missing delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/delete/{{missingId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The warehouse with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 agronomists get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/{{agronomist1}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 agronomists update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/agronomists/update/{{agronomist1}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Agronomist1\",\n  \"lastName\": \"Demo\",\n  \"phone\": \"0780000001\",\n  \"warehouse\": {\n    \"id\": \"{{warehouse4}}\"\n  },\n  \"cropTypes\": [\n    {\n      \"id\": \"{{crop1}}\"\n    },\n    {\n      \"id\": \"{{crop2}}\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Agronomist updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 agronomists missing update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/agronomists/update/{{missingId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Agronomist1\",\n  \"lastName\": \"Demo\",\n  \"phone\": \"0780000001\",\n  \"warehouse\": {\n    \"id\": \"{{warehouse4}}\"\n  },\n  \"cropTypes\": [\n    {\n      \"id\": \"{{crop1}}\"\n    },\n    {\n      \"id\": \"{{crop2}}\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The agronomist with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 agronomists missing delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/delete/{{missingId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The agronomist with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 farmers get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/{{farmer1}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 farmers update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/farmers/update/{{farmer1}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Alice\",\n  \"lastName\": \"Niyonzima\",\n  \"farmerCode\": \"FRM-0345\",\n  \"phone\": \"0790000001\",\n  \"district\": \"Gasabo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Farmer updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 farmers missing update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/farmers/update/{{missingId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Alice\",\n  \"lastName\": \"Niyonzima\",\n  \"farmerCode\": \"FRM-0345\",\n  \"phone\": \"0790000001\",\n  \"district\": \"Gasabo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The farmer with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 farmers missing delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/delete/{{missingId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The farmer with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 harvest-forecasts get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{forecast10}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 harvest-forecasts update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/update/{{forecast10}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-11-05\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1010,\n  \"farmer\": {\n    \"id\": \"{{farmer5}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist3}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 harvest-forecasts missing update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/update/{{missingId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"2026-11-05\",\n  \"cropName\": \"Maize\",\n  \"expectedKg\": 1010,\n  \"farmer\": {\n    \"id\": \"{{farmer5}}\"\n  },\n  \"agronomist\": {\n    \"id\": \"{{agronomist3}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The harvest forecast with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 harvest-forecasts missing delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/delete/{{missingId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The harvest forecast with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "A2 - independent CRUD lifecycle",
+      "item": [
+        {
+          "name": "A2 crop-types save",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/crop-types/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Disposable crop\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Crop type saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture disposableId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.name === 'Disposable crop'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('disposableId', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 crop-types get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 crop-types update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/crop-types/update/{{disposableId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Disposable crop\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Crop type updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 crop-types delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/delete/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Crop type deleted successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 crop-types deleted get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/crop-types/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The crop type with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 warehouses save",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/warehouses/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseNumber\": 99,\n  \"name\": \"Disposable warehouse\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Warehouse saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture disposableId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.warehouseNumber === 99); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('disposableId', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 warehouses get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 warehouses update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/warehouses/update/{{disposableId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warehouseNumber\": 99,\n  \"name\": \"Disposable warehouse\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Warehouse updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 warehouses delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/delete/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Warehouse deleted successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 warehouses deleted get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/warehouses/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The warehouse with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 agronomists save",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/agronomists/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Disposable\",\n  \"lastName\": \"Agronomist\",\n  \"phone\": \"0789999999\",\n  \"warehouse\": null,\n  \"cropTypes\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Agronomist saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture disposableId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.firstName === 'Disposable'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('disposableId', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 agronomists get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 agronomists update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/agronomists/update/{{disposableId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Disposable\",\n  \"lastName\": \"Agronomist\",\n  \"phone\": \"0789999999\",\n  \"warehouse\": null,\n  \"cropTypes\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Agronomist updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 agronomists delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/delete/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Agronomist deleted successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 agronomists deleted get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/agronomists/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The agronomist with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 farmers save",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/farmers/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Disposable\",\n  \"lastName\": \"Farmer\",\n  \"farmerCode\": \"FRM-DISPOSABLE\",\n  \"phone\": \"0799999999\",\n  \"district\": \"Gasabo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Farmer saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture disposableId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.farmerCode === 'FRM-DISPOSABLE'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('disposableId', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 farmers get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 farmers update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/farmers/update/{{disposableId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Disposable\",\n  \"lastName\": \"Farmer\",\n  \"farmerCode\": \"FRM-DISPOSABLE\",\n  \"phone\": \"0799999999\",\n  \"district\": \"Gasabo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Farmer updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 farmers delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/delete/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Farmer deleted successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 farmers deleted get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/farmers/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The farmer with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 harvest-forecasts save",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/save",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"{{futureDate}}\",\n  \"cropName\": \"Disposable crop\",\n  \"expectedKg\": 99,\n  \"farmer\": null,\n  \"agronomist\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast saved successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Capture disposableId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/all"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const row = pm.response.json().find(x => x.cropName === 'Disposable crop'); pm.test('Seed record exists', () => pm.expect(row).to.exist); if (row) pm.collectionVariables.set('disposableId', row.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 harvest-forecasts get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 harvest-forecasts update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/harvest-forecasts/update/{{disposableId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"forecastDate\": \"{{futureDate}}\",\n  \"cropName\": \"Disposable crop\",\n  \"expectedKg\": 99,\n  \"farmer\": null,\n  \"agronomist\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast updated successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 harvest-forecasts delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/delete/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"Harvest forecast deleted successfully\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "A2 harvest-forecasts deleted get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/harvest-forecasts/{{disposableId}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+                  "pm.test('Exact message', () => pm.expect(pm.response.text()).to.eql(\"The harvest forecast with that id does not exist\"));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

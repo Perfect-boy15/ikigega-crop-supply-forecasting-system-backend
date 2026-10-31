@@ -29,8 +29,8 @@ public class FarmerController {
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Farmer farmer) {
-        farmerService.save(farmer);
-        return ResponseEntity.status(201).body("Farmer saved successfully");
+        String message = farmerService.save(farmer);
+        return ResponseEntity.status(201).body(message);
     }
 
     @GetMapping("/all")
@@ -49,11 +49,11 @@ public class FarmerController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody Farmer farmer) {
-        Farmer updated = farmerService.update(id, farmer);
-        if (updated == null) {
+        String message = farmerService.update(id, farmer);
+        if (message.equals("The farmer with that id does not exist")) {
             return ResponseEntity.status(404).body("The farmer with that id does not exist");
         }
-        return ResponseEntity.status(200).body("Farmer updated successfully");
+        return ResponseEntity.status(200).body(message);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -68,5 +68,14 @@ public class FarmerController {
     @GetMapping("/by-last-name")
     public ResponseEntity<List<Farmer>> findByLastName(@RequestParam String lastName) {
         return ResponseEntity.status(200).body(farmerService.findByLastName(lastName));
+    }
+
+    @GetMapping("/of-agronomist/{agronomistId}")
+    public ResponseEntity<?> findFarmersByAgronomist(@PathVariable UUID agronomistId) {
+        List<Farmer> farmers = farmerService.findFarmersByAgronomistId(agronomistId);
+        if (farmers == null) {
+            return ResponseEntity.status(404).body("The agronomist with that id does not exist");
+        }
+        return ResponseEntity.status(200).body(farmers);
     }
 }

@@ -28,8 +28,8 @@ public class CropTypeController {
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody CropType cropType) {
-        cropTypeService.save(cropType);
-        return ResponseEntity.status(201).body("Crop type saved successfully");
+        String message = cropTypeService.save(cropType);
+        return ResponseEntity.status(201).body(message);
     }
 
     @GetMapping("/all")
@@ -48,11 +48,11 @@ public class CropTypeController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody CropType cropType) {
-        CropType updated = cropTypeService.update(id, cropType);
-        if (updated == null) {
+        String message = cropTypeService.update(id, cropType);
+        if (message.equals("The crop type with that id does not exist")) {
             return ResponseEntity.status(404).body("The crop type with that id does not exist");
         }
-        return ResponseEntity.status(200).body("Crop type updated successfully");
+        return ResponseEntity.status(200).body(message);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -62,5 +62,10 @@ public class CropTypeController {
             return ResponseEntity.status(404).body(message);
         }
         return ResponseEntity.status(200).body(message);
+    }
+
+    @GetMapping("/unused")
+    public ResponseEntity<List<CropType>> findUnused() {
+        return ResponseEntity.status(200).body(cropTypeService.findUnused());
     }
 }

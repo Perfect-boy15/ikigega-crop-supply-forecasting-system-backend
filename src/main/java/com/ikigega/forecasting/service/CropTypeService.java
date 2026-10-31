@@ -17,8 +17,9 @@ public class CropTypeService {
         this.cropTypeRepository = cropTypeRepository;
     }
 
-    public CropType save(CropType cropType) {
-        return cropTypeRepository.save(cropType);
+    public String save(CropType cropType) {
+        cropTypeRepository.save(cropType);
+        return "Crop type saved successfully";
     }
 
     public List<CropType> findAll() {
@@ -29,14 +30,16 @@ public class CropTypeService {
         return cropTypeRepository.findById(id);
     }
 
-    public CropType update(UUID id, CropType cropType) {
+    public String update(UUID id, CropType cropType) {
         Optional<CropType> existing = cropTypeRepository.findById(id);
         if (existing.isPresent()) {
             CropType cropTypeToUpdate = existing.get();
             cropTypeToUpdate.setName(cropType.getName());
-            return cropTypeRepository.save(cropTypeToUpdate);
+
+            cropTypeRepository.save(cropTypeToUpdate);
+            return "Crop type updated successfully";
         }
-        return null;
+        return "The crop type with that id does not exist";
     }
 
     public String delete(UUID id) {
@@ -46,5 +49,9 @@ public class CropTypeService {
             return "Crop type deleted successfully";
         }
         return "The crop type with that id does not exist";
+    }
+
+    public List<CropType> findUnused() {
+        return cropTypeRepository.findUnused();
     }
 }

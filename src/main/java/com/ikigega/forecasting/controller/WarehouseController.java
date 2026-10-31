@@ -28,8 +28,8 @@ public class WarehouseController {
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Warehouse warehouse) {
-        warehouseService.save(warehouse);
-        return ResponseEntity.status(201).body("Warehouse saved successfully");
+        String message = warehouseService.save(warehouse);
+        return ResponseEntity.status(201).body(message);
     }
 
     @GetMapping("/all")
@@ -48,11 +48,11 @@ public class WarehouseController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody Warehouse warehouse) {
-        Warehouse updated = warehouseService.update(id, warehouse);
-        if (updated == null) {
+        String message = warehouseService.update(id, warehouse);
+        if (message.equals("The warehouse with that id does not exist")) {
             return ResponseEntity.status(404).body("The warehouse with that id does not exist");
         }
-        return ResponseEntity.status(200).body("Warehouse updated successfully");
+        return ResponseEntity.status(200).body(message);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -62,5 +62,10 @@ public class WarehouseController {
             return ResponseEntity.status(404).body(message);
         }
         return ResponseEntity.status(200).body(message);
+    }
+
+    @GetMapping("/free")
+    public ResponseEntity<List<Warehouse>> findFreeWarehouses() {
+        return ResponseEntity.status(200).body(warehouseService.findFreeWarehouses());
     }
 }

@@ -55,11 +55,11 @@ public class WeighingTicketController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody WeighingTicket weighingTicket) {
-        WeighingTicket updated = weighingTicketService.update(id, weighingTicket);
-        if (updated == null) {
+        String message = weighingTicketService.update(id, weighingTicket);
+        if (message.equals("The weighing ticket with that id does not exist")) {
             return ResponseEntity.status(404).body("The weighing ticket with that id does not exist");
         }
-        return ResponseEntity.status(200).body("Weighing ticket updated successfully");
+        return ResponseEntity.status(200).body(message);
     }
 
     @DeleteMapping("/delete/{id}")

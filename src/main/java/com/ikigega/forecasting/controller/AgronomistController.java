@@ -5,11 +5,13 @@ import com.ikigega.forecasting.service.AgronomistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,8 +30,8 @@ public class AgronomistController {
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Agronomist agronomist) {
-        agronomistService.save(agronomist);
-        return ResponseEntity.status(201).body("Agronomist saved successfully");
+        String message = agronomistService.save(agronomist);
+        return ResponseEntity.status(201).body(message);
     }
 
     @GetMapping("/all")
@@ -48,11 +50,11 @@ public class AgronomistController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody Agronomist agronomist) {
-        Agronomist updated = agronomistService.update(id, agronomist);
-        if (updated == null) {
+        String message = agronomistService.update(id, agronomist);
+        if (message.equals("The agronomist with that id does not exist")) {
             return ResponseEntity.status(404).body("The agronomist with that id does not exist");
         }
-        return ResponseEntity.status(200).body("Agronomist updated successfully");
+        return ResponseEntity.status(200).body(message);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -60,6 +62,35 @@ public class AgronomistController {
         String message = agronomistService.delete(id);
         if (message.equals("The agronomist with that id does not exist")) {
             return ResponseEntity.status(404).body(message);
+        }
+        return ResponseEntity.status(200).body(message);
+    }
+
+    @GetMapping("/by-crop-type")
+    public ResponseEntity<List<Agronomist>> findByCropType(@RequestParam String name) {
+        return ResponseEntity.status(200).body(agronomistService.findByCropType(name));
+    }
+
+    @PutMapping("/{agronomistId}/crop-types/{cropTypeId}")
+    public ResponseEntity<String> addCropType(@PathVariable UUID agronomistId, @PathVariable UUID cropTypeId) {
+        String message = agronomistService.addCropType(agronomistId, cropTypeId);
+        if (message.equals("The agronomist with that id does not exist") || message.equals("That crop type does not exist")) {
+            return ResponseEntity.status(404).body(message);
+        }
+        if (message.equals("The agronomist already has that crop type")) {
+            return ResponseEntity.status(409).body(message);
+        }
+        return ResponseEntity.status(200).body(message);
+    }
+
+    @PatchMapping("/{agronomistId}/warehouse")
+    public ResponseEntity<String> changeWarehouse(@PathVariable UUID agronomistId, @RequestParam int warehouseNumber) {
+        String message = agronomistService.changeWarehouse(agronomistId, warehouseNumber);
+        if (message.equals("The agronomist with that id does not exist") || message.equals("The warehouse with that warehouseNumber does not exist")) {
+            return ResponseEntity.status(404).body(message);
+        }
+        if (message.equals("That warehouse is taken by another agronomist")) {
+            return ResponseEntity.status(409).body(message);
         }
         return ResponseEntity.status(200).body(message);
     }

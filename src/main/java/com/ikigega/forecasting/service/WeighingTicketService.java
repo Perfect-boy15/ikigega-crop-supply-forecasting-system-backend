@@ -25,10 +25,11 @@ public class WeighingTicketService {
     }
 
     public String save(WeighingTicket weighingTicket, UUID harvestForecastId) {
-        HarvestForecast harvestForecast = harvestForecastRepository.findById(harvestForecastId).orElse(null);
-        if (harvestForecast == null) {
+        Optional<HarvestForecast> existing = harvestForecastRepository.findById(harvestForecastId);
+        if (existing.isEmpty()) {
             return "The harvest forecast with that id does not exist";
         }
+        HarvestForecast harvestForecast = existing.get();
         if (harvestForecast.getStatus() != ForecastStatus.DELIVERED) {
             return "Weighing tickets are only for DELIVERED harvest forecasts";
         }
@@ -46,7 +47,7 @@ public class WeighingTicketService {
         return weighingTicketRepository.findById(id);
     }
 
-    public WeighingTicket update(UUID id, WeighingTicket weighingTicket) {
+    public String update(UUID id, WeighingTicket weighingTicket) {
         Optional<WeighingTicket> existing = weighingTicketRepository.findById(id);
         if (existing.isPresent()) {
             WeighingTicket weighingTicketToUpdate = existing.get();
@@ -55,9 +56,11 @@ public class WeighingTicketService {
             weighingTicketToUpdate.setWeightKg(weighingTicket.getWeightKg());
             weighingTicketToUpdate.setWeighedDate(weighingTicket.getWeighedDate());
             weighingTicketToUpdate.setHarvestForecast(weighingTicket.getHarvestForecast());
-            return weighingTicketRepository.save(weighingTicketToUpdate);
+
+            weighingTicketRepository.save(weighingTicketToUpdate);
+            return "Weighing ticket updated successfully";
         }
-        return null;
+        return "The weighing ticket with that id does not exist";
     }
 
     public String delete(UUID id) {

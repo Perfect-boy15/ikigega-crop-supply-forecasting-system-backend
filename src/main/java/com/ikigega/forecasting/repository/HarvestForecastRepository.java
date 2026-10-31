@@ -18,6 +18,16 @@ public interface HarvestForecastRepository extends JpaRepository<HarvestForecast
     @Query("SELECT h.status, COUNT(h) FROM HarvestForecast h GROUP BY h.status")
     List<Object[]> findForecastStatsByStatus();
 
+    long countByForecastDate(LocalDate forecastDate);
+
+    long countByStatus(ForecastStatus status);
+
+    List<HarvestForecast> findByStatusOrderByForecastDateAsc(ForecastStatus status);
+
+    List<HarvestForecast> findByForecastDateBetweenOrderByForecastDateAsc(LocalDate start, LocalDate end);
+
+    boolean existsByAgronomistIdAndForecastDateAndStatusNot(UUID agronomistId, LocalDate forecastDate, ForecastStatus statusNot);
+
     @Modifying
     @Query("UPDATE HarvestForecast h SET h.status = :newStatus WHERE h.agronomist.id = :agronomistId AND h.forecastDate = :date AND h.status <> :deliveredStatus")
     int cancelDay(@Param("agronomistId") UUID agronomistId, @Param("date") LocalDate date, @Param("deliveredStatus") ForecastStatus deliveredStatus, @Param("newStatus") ForecastStatus newStatus);

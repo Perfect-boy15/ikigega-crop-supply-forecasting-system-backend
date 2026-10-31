@@ -17,8 +17,9 @@ public class WarehouseService {
         this.warehouseRepository = warehouseRepository;
     }
 
-    public Warehouse save(Warehouse warehouse) {
-        return warehouseRepository.save(warehouse);
+    public String save(Warehouse warehouse) {
+        warehouseRepository.save(warehouse);
+        return "Warehouse saved successfully";
     }
 
     public List<Warehouse> findAll() {
@@ -29,15 +30,17 @@ public class WarehouseService {
         return warehouseRepository.findById(id);
     }
 
-    public Warehouse update(UUID id, Warehouse warehouse) {
+    public String update(UUID id, Warehouse warehouse) {
         Optional<Warehouse> existing = warehouseRepository.findById(id);
         if (existing.isPresent()) {
             Warehouse warehouseToUpdate = existing.get();
             warehouseToUpdate.setWarehouseNumber(warehouse.getWarehouseNumber());
             warehouseToUpdate.setName(warehouse.getName());
-            return warehouseRepository.save(warehouseToUpdate);
+
+            warehouseRepository.save(warehouseToUpdate);
+            return "Warehouse updated successfully";
         }
-        return null;
+        return "The warehouse with that id does not exist";
     }
 
     public String delete(UUID id) {
@@ -47,5 +50,9 @@ public class WarehouseService {
             return "Warehouse deleted successfully";
         }
         return "The warehouse with that id does not exist";
+    }
+
+    public List<Warehouse> findFreeWarehouses() {
+        return warehouseRepository.findFreeWarehouses();
     }
 }

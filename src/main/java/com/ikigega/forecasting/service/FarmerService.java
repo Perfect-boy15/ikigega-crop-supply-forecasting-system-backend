@@ -1,6 +1,7 @@
 package com.ikigega.forecasting.service;
 
 import com.ikigega.forecasting.entity.Farmer;
+import com.ikigega.forecasting.repository.AgronomistRepository;
 import com.ikigega.forecasting.repository.FarmerRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,17 @@ import java.util.UUID;
 public class FarmerService {
 
     private final FarmerRepository farmerRepository;
+    private final AgronomistRepository agronomistRepository;
 
-    public FarmerService(FarmerRepository farmerRepository) {
+    public FarmerService(FarmerRepository farmerRepository,
+                         AgronomistRepository agronomistRepository) {
         this.farmerRepository = farmerRepository;
+        this.agronomistRepository = agronomistRepository;
     }
 
-    public Farmer save(Farmer farmer) {
-        return farmerRepository.save(farmer);
+    public String save(Farmer farmer) {
+        farmerRepository.save(farmer);
+        return "Farmer saved successfully";
     }
 
     public List<Farmer> findAll() {
@@ -29,7 +34,7 @@ public class FarmerService {
         return farmerRepository.findById(id);
     }
 
-    public Farmer update(UUID id, Farmer farmer) {
+    public String update(UUID id, Farmer farmer) {
         Optional<Farmer> existing = farmerRepository.findById(id);
         if (existing.isPresent()) {
             Farmer farmerToUpdate = existing.get();
@@ -38,9 +43,11 @@ public class FarmerService {
             farmerToUpdate.setFarmerCode(farmer.getFarmerCode());
             farmerToUpdate.setPhone(farmer.getPhone());
             farmerToUpdate.setDistrict(farmer.getDistrict());
-            return farmerRepository.save(farmerToUpdate);
+
+            farmerRepository.save(farmerToUpdate);
+            return "Farmer updated successfully";
         }
-        return null;
+        return "The farmer with that id does not exist";
     }
 
     public String delete(UUID id) {
@@ -54,5 +61,12 @@ public class FarmerService {
 
     public List<Farmer> findByLastName(String lastName) {
         return farmerRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    public List<Farmer> findFarmersByAgronomistId(UUID agronomistId) {
+        if (agronomistRepository.findById(agronomistId).isEmpty()) {
+            return null;
+        }
+        return farmerRepository.findFarmersByAgronomistId(agronomistId);
     }
 }
