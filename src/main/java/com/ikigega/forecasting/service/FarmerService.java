@@ -51,4 +51,8 @@ public class FarmerService {
         }
         return "The farmer with that id does not exist";
     }
+
+    public List<Farmer> findByLastName(String lastName) {
+        return farmerRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
 }
